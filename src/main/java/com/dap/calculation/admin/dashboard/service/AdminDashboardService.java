@@ -1,6 +1,6 @@
-package com.dap.calculation.admin.service;
+package com.dap.calculation.admin.dashboard.service;
 
-import com.dap.calculation.admin.dto.AdminDashboardResponseDTO;
+import com.dap.calculation.admin.dashboard.dto.AdminDashboardResponseDTO;
 import com.dap.calculation.repository.InsuranceRepository;
 import com.dap.calculation.repository.RtoRepository;
 import com.dap.calculation.repository.VehicleRepository;

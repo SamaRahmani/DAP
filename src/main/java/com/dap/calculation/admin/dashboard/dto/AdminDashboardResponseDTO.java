@@ -1,4 +1,4 @@
-package com.dap.calculation.admin.dto;
+package com.dap.calculation.admin.dashboard.dto;
 
 public class AdminDashboardResponseDTO {
 

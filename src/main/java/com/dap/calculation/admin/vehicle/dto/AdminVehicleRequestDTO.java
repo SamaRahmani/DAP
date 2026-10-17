@@ -1,8 +1,8 @@
-package com.dap.calculation.admin.dto;
+package com.dap.calculation.admin.vehicle.dto;
 
 import java.math.BigDecimal;
 
-public class AdminVehicleResponseDTO {
+public class AdminVehicleRequestDTO {
 
     private String vehicleId;
     private String modelName;
@@ -13,7 +13,7 @@ public class AdminVehicleResponseDTO {
     private BigDecimal lengthMm;
     private BigDecimal groundClearanceMm;
 
-    public AdminVehicleResponseDTO() {
+    public AdminVehicleRequestDTO() {
     }
 
     public String getVehicleId() {

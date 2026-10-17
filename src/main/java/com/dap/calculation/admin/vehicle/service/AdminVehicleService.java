@@ -1,7 +1,7 @@
-package com.dap.calculation.admin.service;
+package com.dap.calculation.admin.vehicle.service;
 
-import com.dap.calculation.admin.dto.AdminVehicleRequestDTO;
-import com.dap.calculation.admin.dto.AdminVehicleResponseDTO;
+import com.dap.calculation.admin.vehicle.dto.AdminVehicleRequestDTO;
+import com.dap.calculation.admin.vehicle.dto.AdminVehicleResponseDTO;
 import com.dap.calculation.entity.Vehicle;
 import com.dap.calculation.repository.VehicleRepository;
 

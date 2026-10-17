@@ -1,9 +1,8 @@
-package com.dap.calculation.admin.controller;
+package com.dap.calculation.admin.vehicle.controller;
 
-import com.dap.calculation.admin.dto.AdminVehicleRequestDTO;
-import com.dap.calculation.admin.dto.AdminVehicleResponseDTO;
-import com.dap.calculation.admin.service.AdminVehicleService;
-
+import com.dap.calculation.admin.vehicle.dto.AdminVehicleRequestDTO;
+import com.dap.calculation.admin.vehicle.dto.AdminVehicleResponseDTO;
+import com.dap.calculation.admin.vehicle.service.AdminVehicleService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
