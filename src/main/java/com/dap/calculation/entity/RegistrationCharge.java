@@ -18,14 +18,17 @@ public class RegistrationCharge {
     @Column(name = "registration_charge_id")
     private Long registrationChargeId;
 
+    @Column(name = "charge_scope", nullable = false, length = 10)
+    private String chargeScope;
+
     @Column(name = "state_code", nullable = false, length = 10)
     private String stateCode;
 
+    @Column(name = "city_id")
+    private Long cityId;
+
     @Column(name = "charge_name", nullable = false, length = 100)
     private String chargeName;
-
-    @Column(name = "charge_type", nullable = false, length = 20)
-    private String chargeType;
 
     @Column(name = "charge_value", nullable = false, precision = 15, scale = 4)
     private BigDecimal chargeValue;
@@ -41,6 +44,14 @@ public class RegistrationCharge {
         this.registrationChargeId = registrationChargeId;
     }
 
+    public String getChargeScope() {
+        return chargeScope;
+    }
+
+    public void setChargeScope(String chargeScope) {
+        this.chargeScope = chargeScope;
+    }
+
     public String getStateCode() {
         return stateCode;
     }
@@ -49,20 +60,20 @@ public class RegistrationCharge {
         this.stateCode = stateCode;
     }
 
+    public Long getCityId() {
+        return cityId;
+    }
+
+    public void setCityId(Long cityId) {
+        this.cityId = cityId;
+    }
+
     public String getChargeName() {
         return chargeName;
     }
 
     public void setChargeName(String chargeName) {
         this.chargeName = chargeName;
-    }
-
-    public String getChargeType() {
-        return chargeType;
-    }
-
-    public void setChargeType(String chargeType) {
-        this.chargeType = chargeType;
     }
 
     public BigDecimal getChargeValue() {

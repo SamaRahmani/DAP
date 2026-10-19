@@ -1,24 +1,10 @@
 package com.dap.calculation.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-import jakarta.persistence.UniqueConstraint;
-
+import jakarta.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(
-        name = "tax_rules",
-        uniqueConstraints = {
-                @UniqueConstraint(
-                        columnNames = {"tax_type_id", "state_code"}
-                )
-        }
-)
+@Table(name = "tax_rules")
 public class TaxRule {
 
     @Id
@@ -26,17 +12,22 @@ public class TaxRule {
     @Column(name = "tax_rule_id")
     private Long taxRuleId;
 
-    @Column(name = "tax_type_id", nullable = false, length = 20)
-    private String taxTypeId;
+    @Column(name = "tax_type_id", nullable = false)
+    private Long taxTypeId;
 
-    @Column(name = "state_code", nullable = false, length = 10)
-    private String stateCode;
+    @Column(name = "rule_name", nullable = false, length = 100)
+    private String ruleName;
 
-    @Column(name = "tax_percentage", nullable = false, precision = 8, scale = 4)
+    @Column(
+            name = "tax_percentage",
+            nullable = false,
+            precision = 8,
+            scale = 4
+    )
     private BigDecimal taxPercentage;
 
-    @Column(name = "calculation_basis", nullable = false, length = 50)
-    private String calculationBasis;
+    @Column(name = "is_active", nullable = false)
+    private Boolean isActive = true;
 
     public TaxRule() {
     }
@@ -49,20 +40,20 @@ public class TaxRule {
         this.taxRuleId = taxRuleId;
     }
 
-    public String getTaxTypeId() {
+    public Long getTaxTypeId() {
         return taxTypeId;
     }
 
-    public void setTaxTypeId(String taxTypeId) {
+    public void setTaxTypeId(Long taxTypeId) {
         this.taxTypeId = taxTypeId;
     }
 
-    public String getStateCode() {
-        return stateCode;
+    public String getRuleName() {
+        return ruleName;
     }
 
-    public void setStateCode(String stateCode) {
-        this.stateCode = stateCode;
+    public void setRuleName(String ruleName) {
+        this.ruleName = ruleName;
     }
 
     public BigDecimal getTaxPercentage() {
@@ -73,11 +64,11 @@ public class TaxRule {
         this.taxPercentage = taxPercentage;
     }
 
-    public String getCalculationBasis() {
-        return calculationBasis;
+    public Boolean getIsActive() {
+        return isActive;
     }
 
-    public void setCalculationBasis(String calculationBasis) {
-        this.calculationBasis = calculationBasis;
+    public void setIsActive(Boolean active) {
+        isActive = active;
     }
 }
