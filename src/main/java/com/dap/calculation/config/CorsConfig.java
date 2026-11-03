@@ -16,6 +16,7 @@ public class CorsConfig {
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/api/v1/admin/**")
                         .allowedOrigins("http://localhost:4200",
+                                "https://samarahmani.github.io",
 
                                 "http://localhost:51112")
                         .allowedMethods(
