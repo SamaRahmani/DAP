@@ -1,11 +1,14 @@
+
 package com.dap.calculation.admin.registration.dto;
+
+import com.dap.calculation.enums.ChargeScope;
 
 import java.math.BigDecimal;
 
 public class AdminRegistrationChargeResponseDTO {
 
     private Long registrationChargeId;
-    private String chargeScope;
+    private ChargeScope chargeScope;
     private String stateCode;
     private Long cityId;
     private String chargeName;
@@ -16,7 +19,7 @@ public class AdminRegistrationChargeResponseDTO {
 
     public AdminRegistrationChargeResponseDTO(
             Long registrationChargeId,
-            String chargeScope,
+            ChargeScope chargeScope,
             String stateCode,
             Long cityId,
             String chargeName,
@@ -38,11 +41,11 @@ public class AdminRegistrationChargeResponseDTO {
         this.registrationChargeId = registrationChargeId;
     }
 
-    public String getChargeScope() {
+    public ChargeScope getChargeScope() {
         return chargeScope;
     }
 
-    public void setChargeScope(String chargeScope) {
+    public void setChargeScope(ChargeScope chargeScope) {
         this.chargeScope = chargeScope;
     }
 

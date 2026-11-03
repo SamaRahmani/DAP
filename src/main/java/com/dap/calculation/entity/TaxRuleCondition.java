@@ -1,3 +1,4 @@
+
 package com.dap.calculation.entity;
 
 import jakarta.persistence.*;
@@ -13,6 +14,9 @@ public class TaxRuleCondition {
 
     @Column(name = "tax_rule_id", nullable = false)
     private Long taxRuleId;
+
+    @Column(name = "condition_field_id", nullable = false)
+    private Long conditionFieldId;
 
     @Column(name = "field_name", nullable = false, length = 100)
     private String fieldName;
@@ -43,6 +47,14 @@ public class TaxRuleCondition {
 
     public void setTaxRuleId(Long taxRuleId) {
         this.taxRuleId = taxRuleId;
+    }
+
+    public Long getConditionFieldId() {
+        return conditionFieldId;
+    }
+
+    public void setConditionFieldId(Long conditionFieldId) {
+        this.conditionFieldId = conditionFieldId;
     }
 
     public String getFieldName() {

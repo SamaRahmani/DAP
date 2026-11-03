@@ -1,33 +1,94 @@
-HELP.md
+
+# ==========================================
+# Maven
+# ==========================================
 target/
-.mvn/wrapper/maven-wrapper.jar
-!**/src/main/**/target/
-!**/src/test/**/target/
+!.mvn/wrapper/maven-wrapper.jar
 
-### STS ###
-.apt_generated
-.classpath
-.factorypath
-.project
-.settings
-.springBeans
-.sts4-cache
+# ==========================================
+# Java build files
+# ==========================================
+*.class
+*.jar
+*.war
+*.ear
 
-### IntelliJ IDEA ###
-.idea
+# ==========================================
+# Environment variables and secrets
+# ==========================================
+.env
+.env.*
+!.env.example
+
+# Local configuration overrides
+application-local.properties
+application-dev.properties
+application-prod.properties
+
+# ==========================================
+# Logs
+# ==========================================
+*.log
+logs/
+
+# ==========================================
+# IntelliJ IDEA
+# ==========================================
+.idea/
 *.iws
 *.iml
 *.ipr
+out/
 
-### NetBeans ###
+# ==========================================
+# Eclipse / STS
+# ==========================================
+.apt_generated/
+.classpath
+.factorypath
+.project
+.settings/
+.springBeans
+.sts4-cache/
+
+# ==========================================
+# NetBeans
+# ==========================================
 /nbproject/private/
 /nbbuild/
 /dist/
 /nbdist/
 /.nb-gradle/
-build/
-!**/src/main/**/build/
-!**/src/test/**/build/
 
-### VS Code ###
+# ==========================================
+# VS Code
+# ==========================================
 .vscode/
+
+# ==========================================
+# macOS
+# ==========================================
+.DS_Store
+**/.DS_Store
+.AppleDouble
+.LSOverride
+
+# ==========================================
+# Windows
+# ==========================================
+Thumbs.db
+Desktop.ini
+
+# ==========================================
+# Temporary files
+# ==========================================
+*.tmp
+*.swp
+*.swo
+*~
+
+# ==========================================
+# Other
+# ==========================================
+HELP.md
+build/

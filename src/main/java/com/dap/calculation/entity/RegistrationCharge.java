@@ -1,11 +1,7 @@
 package com.dap.calculation.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.dap.calculation.enums.ChargeScope;
+import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 
@@ -18,10 +14,12 @@ public class RegistrationCharge {
     @Column(name = "registration_charge_id")
     private Long registrationChargeId;
 
-    @Column(name = "charge_scope", nullable = false, length = 10)
-    private String chargeScope;
 
-    @Column(name = "state_code", nullable = false, length = 10)
+    @Enumerated(EnumType.STRING)
+    @Column(name = "charge_scope", nullable = false, length = 10)
+    private ChargeScope chargeScope;
+
+    @Column(name = "state_code",length = 10)
     private String stateCode;
 
     @Column(name = "city_id")
@@ -44,11 +42,11 @@ public class RegistrationCharge {
         this.registrationChargeId = registrationChargeId;
     }
 
-    public String getChargeScope() {
+    public ChargeScope getChargeScope() {
         return chargeScope;
     }
 
-    public void setChargeScope(String chargeScope) {
+    public void setChargeScope(ChargeScope chargeScope) {
         this.chargeScope = chargeScope;
     }
 

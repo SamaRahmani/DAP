@@ -1,3 +1,4 @@
+
 package com.dap.calculation.entity;
 
 import jakarta.persistence.*;
@@ -18,13 +19,24 @@ public class TaxRule {
     @Column(name = "rule_name", nullable = false, length = 100)
     private String ruleName;
 
-    @Column(
-            name = "tax_percentage",
-            nullable = false,
-            precision = 8,
-            scale = 4
-    )
+    // Retained for compatibility with the existing database column.
+    @Column(name = "tax_percentage", nullable = false, precision = 8, scale = 4)
     private BigDecimal taxPercentage;
+
+    @Column(name = "calculation_type", nullable = false, length = 20)
+    private String calculationType = "PERCENTAGE";
+
+    @Column(name = "calculation_base_id")
+    private Long calculationBaseId;
+
+    @Column(name = "tax_value", nullable = false, precision = 15, scale = 4)
+    private BigDecimal taxValue;
+
+    @Column(name = "priority", nullable = false)
+    private Integer priority = 100;
+
+    @Column(name = "is_fallback", nullable = false)
+    private Boolean isFallback = false;
 
     @Column(name = "is_active", nullable = false)
     private Boolean isActive = true;
@@ -32,43 +44,33 @@ public class TaxRule {
     public TaxRule() {
     }
 
-    public Long getTaxRuleId() {
-        return taxRuleId;
-    }
+    public Long getTaxRuleId() { return taxRuleId; }
+    public void setTaxRuleId(Long taxRuleId) { this.taxRuleId = taxRuleId; }
 
-    public void setTaxRuleId(Long taxRuleId) {
-        this.taxRuleId = taxRuleId;
-    }
+    public Long getTaxTypeId() { return taxTypeId; }
+    public void setTaxTypeId(Long taxTypeId) { this.taxTypeId = taxTypeId; }
 
-    public Long getTaxTypeId() {
-        return taxTypeId;
-    }
+    public String getRuleName() { return ruleName; }
+    public void setRuleName(String ruleName) { this.ruleName = ruleName; }
 
-    public void setTaxTypeId(Long taxTypeId) {
-        this.taxTypeId = taxTypeId;
-    }
+    public BigDecimal getTaxPercentage() { return taxPercentage; }
+    public void setTaxPercentage(BigDecimal taxPercentage) { this.taxPercentage = taxPercentage; }
 
-    public String getRuleName() {
-        return ruleName;
-    }
+    public String getCalculationType() { return calculationType; }
+    public void setCalculationType(String calculationType) { this.calculationType = calculationType; }
 
-    public void setRuleName(String ruleName) {
-        this.ruleName = ruleName;
-    }
+    public Long getCalculationBaseId() { return calculationBaseId; }
+    public void setCalculationBaseId(Long calculationBaseId) { this.calculationBaseId = calculationBaseId; }
 
-    public BigDecimal getTaxPercentage() {
-        return taxPercentage;
-    }
+    public BigDecimal getTaxValue() { return taxValue; }
+    public void setTaxValue(BigDecimal taxValue) { this.taxValue = taxValue; }
 
-    public void setTaxPercentage(BigDecimal taxPercentage) {
-        this.taxPercentage = taxPercentage;
-    }
+    public Integer getPriority() { return priority; }
+    public void setPriority(Integer priority) { this.priority = priority; }
 
-    public Boolean getIsActive() {
-        return isActive;
-    }
+    public Boolean getIsFallback() { return isFallback; }
+    public void setIsFallback(Boolean fallback) { isFallback = fallback; }
 
-    public void setIsActive(Boolean active) {
-        isActive = active;
-    }
+    public Boolean getIsActive() { return isActive; }
+    public void setIsActive(Boolean active) { isActive = active; }
 }

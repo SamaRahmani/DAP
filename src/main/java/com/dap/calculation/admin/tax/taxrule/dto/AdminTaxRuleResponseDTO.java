@@ -1,3 +1,4 @@
+
 package com.dap.calculation.admin.tax.taxrule.dto;
 
 import java.math.BigDecimal;
@@ -10,7 +11,18 @@ public class AdminTaxRuleResponseDTO {
     private String taxCode;
     private String taxName;
     private String ruleName;
+
+    private String calculationType;
+    private Long calculationBaseId;
+    private String calculationBaseCode;
+    private String calculationBaseName;
+    private BigDecimal taxValue;
+
+    // Backward compatibility.
     private BigDecimal taxPercentage;
+
+    private Integer priority;
+    private Boolean isFallback;
     private Boolean isActive;
 
     private List<AdminTaxRuleRequestDTO.ConditionDTO> conditions;
@@ -19,77 +31,51 @@ public class AdminTaxRuleResponseDTO {
     public AdminTaxRuleResponseDTO() {
     }
 
-    public Long getTaxRuleId() {
-        return taxRuleId;
-    }
+    public Long getTaxRuleId() { return taxRuleId; }
+    public void setTaxRuleId(Long id) { this.taxRuleId = id; }
 
-    public void setTaxRuleId(Long taxRuleId) {
-        this.taxRuleId = taxRuleId;
-    }
+    public Long getTaxTypeId() { return taxTypeId; }
+    public void setTaxTypeId(Long id) { this.taxTypeId = id; }
 
-    public Long getTaxTypeId() {
-        return taxTypeId;
-    }
+    public String getTaxCode() { return taxCode; }
+    public void setTaxCode(String taxCode) { this.taxCode = taxCode; }
 
-    public void setTaxTypeId(Long taxTypeId) {
-        this.taxTypeId = taxTypeId;
-    }
+    public String getTaxName() { return taxName; }
+    public void setTaxName(String taxName) { this.taxName = taxName; }
 
-    public String getTaxCode() {
-        return taxCode;
-    }
+    public String getRuleName() { return ruleName; }
+    public void setRuleName(String ruleName) { this.ruleName = ruleName; }
 
-    public void setTaxCode(String taxCode) {
-        this.taxCode = taxCode;
-    }
+    public String getCalculationType() { return calculationType; }
+    public void setCalculationType(String type) { this.calculationType = type; }
 
-    public String getTaxName() {
-        return taxName;
-    }
+    public Long getCalculationBaseId() { return calculationBaseId; }
+    public void setCalculationBaseId(Long id) { this.calculationBaseId = id; }
 
-    public void setTaxName(String taxName) {
-        this.taxName = taxName;
-    }
+    public String getCalculationBaseCode() { return calculationBaseCode; }
+    public void setCalculationBaseCode(String code) { this.calculationBaseCode = code; }
 
-    public String getRuleName() {
-        return ruleName;
-    }
+    public String getCalculationBaseName() { return calculationBaseName; }
+    public void setCalculationBaseName(String name) { this.calculationBaseName = name; }
 
-    public void setRuleName(String ruleName) {
-        this.ruleName = ruleName;
-    }
+    public BigDecimal getTaxValue() { return taxValue; }
+    public void setTaxValue(BigDecimal value) { this.taxValue = value; }
 
-    public BigDecimal getTaxPercentage() {
-        return taxPercentage;
-    }
+    public BigDecimal getTaxPercentage() { return taxPercentage; }
+    public void setTaxPercentage(BigDecimal percentage) { this.taxPercentage = percentage; }
 
-    public void setTaxPercentage(BigDecimal taxPercentage) {
-        this.taxPercentage = taxPercentage;
-    }
+    public Integer getPriority() { return priority; }
+    public void setPriority(Integer priority) { this.priority = priority; }
 
-    public Boolean getIsActive() {
-        return isActive;
-    }
+    public Boolean getIsFallback() { return isFallback; }
+    public void setIsFallback(Boolean fallback) { isFallback = fallback; }
 
-    public void setIsActive(Boolean active) {
-        isActive = active;
-    }
+    public Boolean getIsActive() { return isActive; }
+    public void setIsActive(Boolean active) { isActive = active; }
 
-    public List<AdminTaxRuleRequestDTO.ConditionDTO> getConditions() {
-        return conditions;
-    }
+    public List<AdminTaxRuleRequestDTO.ConditionDTO> getConditions() { return conditions; }
+    public void setConditions(List<AdminTaxRuleRequestDTO.ConditionDTO> conditions) { this.conditions = conditions; }
 
-    public void setConditions(
-            List<AdminTaxRuleRequestDTO.ConditionDTO> conditions) {
-        this.conditions = conditions;
-    }
-
-    public List<AdminTaxRuleRequestDTO.ApplicabilityDTO> getApplicability() {
-        return applicability;
-    }
-
-    public void setApplicability(
-            List<AdminTaxRuleRequestDTO.ApplicabilityDTO> applicability) {
-        this.applicability = applicability;
-    }
+    public List<AdminTaxRuleRequestDTO.ApplicabilityDTO> getApplicability() { return applicability; }
+    public void setApplicability(List<AdminTaxRuleRequestDTO.ApplicabilityDTO> applicability) { this.applicability = applicability; }
 }

@@ -1,3 +1,4 @@
+
 package com.dap.calculation.entity;
 
 import jakarta.persistence.*;
@@ -30,6 +31,15 @@ public class TaxRuleApplicability {
 
     @Column(name = "applicability_code", nullable = false, length = 30)
     private String applicabilityCode;
+
+    @Column(name = "state_code", length = 10)
+    private String stateCode;
+
+    @Column(name = "city_id")
+    private Long cityId;
+
+    @Column(name = "rto_code", length = 20)
+    private String rtoCode;
 
     public TaxRuleApplicability() {
     }
@@ -64,5 +74,29 @@ public class TaxRuleApplicability {
 
     public void setApplicabilityCode(String applicabilityCode) {
         this.applicabilityCode = applicabilityCode;
+    }
+
+    public String getStateCode() {
+        return stateCode;
+    }
+
+    public void setStateCode(String stateCode) {
+        this.stateCode = stateCode;
+    }
+
+    public Long getCityId() {
+        return cityId;
+    }
+
+    public void setCityId(Long cityId) {
+        this.cityId = cityId;
+    }
+
+    public String getRtoCode() {
+        return rtoCode;
+    }
+
+    public void setRtoCode(String rtoCode) {
+        this.rtoCode = rtoCode;
     }
 }

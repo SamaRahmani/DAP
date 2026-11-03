@@ -1,6 +1,9 @@
+
 package com.dap.calculation.repository;
 
 import com.dap.calculation.entity.RegistrationCharge;
+import com.dap.calculation.enums.ChargeScope;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -14,15 +17,18 @@ public interface RegistrationChargeRepository
     // Retrieve state-level charges for a state
     List<RegistrationCharge> findByStateCodeAndChargeScope(
             String stateCode,
-            String chargeScope
+            ChargeScope chargeScope
     );
 
-    // Retrieve city-level charges for a city
+    // Retrieve all charges for a city
     List<RegistrationCharge> findByCityId(Long cityId);
 
     // Retrieve city-level charges for a city and scope
     List<RegistrationCharge> findByCityIdAndChargeScope(
             Long cityId,
-            String chargeScope
+            ChargeScope chargeScope
     );
+
+    // Retrieve all national-level charges
+    List<RegistrationCharge> findByChargeScope(ChargeScope chargeScope);
 }

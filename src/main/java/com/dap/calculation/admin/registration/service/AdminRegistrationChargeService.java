@@ -1,9 +1,11 @@
+
 package com.dap.calculation.admin.registration.service;
 
 import com.dap.calculation.admin.registration.dto.AdminRegistrationChargeRequestDTO;
 import com.dap.calculation.admin.registration.dto.AdminRegistrationChargeResponseDTO;
 import com.dap.calculation.entity.City;
 import com.dap.calculation.entity.RegistrationCharge;
+import com.dap.calculation.enums.ChargeScope;
 import com.dap.calculation.repository.CityRepository;
 import com.dap.calculation.repository.RegistrationChargeRepository;
 import com.dap.calculation.repository.StateRepository;
@@ -35,7 +37,10 @@ public class AdminRegistrationChargeService {
         this.cityRepository = cityRepository;
     }
 
-    // GET: All registration charges
+    // =====================================
+    // GET: ALL REGISTRATION CHARGES
+    // =====================================
+
     @Transactional(readOnly = true)
     public List<AdminRegistrationChargeResponseDTO> getAllRegistrationCharges() {
 
@@ -45,7 +50,10 @@ public class AdminRegistrationChargeService {
                 .toList();
     }
 
-    // GET: Registration charge by ID
+    // =====================================
+    // GET: REGISTRATION CHARGE BY ID
+    // =====================================
+
     @Transactional(readOnly = true)
     public AdminRegistrationChargeResponseDTO getRegistrationChargeById(
             Long registrationChargeId) {
@@ -59,7 +67,11 @@ public class AdminRegistrationChargeService {
         return toResponseDTO(charge);
     }
 
-    // GET: All charges for a state
+    // =====================================
+    // GET: ALL APPLICABLE CHARGES FOR STATE
+    // Includes NATIONAL and STATE/CITY charges
+    // =====================================
+
     @Transactional(readOnly = true)
     public List<AdminRegistrationChargeResponseDTO> getRegistrationChargesByState(
             String stateCode) {
@@ -67,14 +79,19 @@ public class AdminRegistrationChargeService {
         String normalizedStateCode = normalizeStateCode(stateCode);
         validateStateExists(normalizedStateCode);
 
-        return registrationChargeRepository
-                .findByStateCode(normalizedStateCode)
+        return registrationChargeRepository.findAll()
                 .stream()
+                .filter(charge ->
+                        charge.getChargeScope() == ChargeScope.NATIONAL ||
+                                normalizedStateCode.equals(charge.getStateCode()))
                 .map(this::toResponseDTO)
                 .toList();
     }
 
-    // GET: State-level charges only
+    // =====================================
+    // GET: STATE-LEVEL CHARGES ONLY
+    // =====================================
+
     @Transactional(readOnly = true)
     public List<AdminRegistrationChargeResponseDTO> getStateLevelCharges(
             String stateCode) {
@@ -83,13 +100,18 @@ public class AdminRegistrationChargeService {
         validateStateExists(normalizedStateCode);
 
         return registrationChargeRepository
-                .findByStateCodeAndChargeScope(normalizedStateCode, "STATE")
+                .findByStateCodeAndChargeScope(
+                        normalizedStateCode,
+                        ChargeScope.STATE)
                 .stream()
                 .map(this::toResponseDTO)
                 .toList();
     }
 
-    // GET: City-level charges only
+    // =====================================
+    // GET: CITY-LEVEL CHARGES ONLY
+    // =====================================
+
     @Transactional(readOnly = true)
     public List<AdminRegistrationChargeResponseDTO> getCityLevelCharges(
             Long cityId) {
@@ -100,13 +122,18 @@ public class AdminRegistrationChargeService {
                         "City not found: " + cityId));
 
         return registrationChargeRepository
-                .findByCityIdAndChargeScope(city.getCityId(), "CITY")
+                .findByCityIdAndChargeScope(
+                        city.getCityId(),
+                        ChargeScope.CITY)
                 .stream()
                 .map(this::toResponseDTO)
                 .toList();
     }
 
-    // POST: Create registration charge
+    // =====================================
+    // POST: CREATE REGISTRATION CHARGE
+    // =====================================
+
     public AdminRegistrationChargeResponseDTO createRegistrationCharge(
             AdminRegistrationChargeRequestDTO request) {
 
@@ -120,7 +147,10 @@ public class AdminRegistrationChargeService {
         return toResponseDTO(savedCharge);
     }
 
-    // PUT: Update registration charge
+    // =====================================
+    // PUT: UPDATE REGISTRATION CHARGE
+    // =====================================
+
     public AdminRegistrationChargeResponseDTO updateRegistrationCharge(
             Long registrationChargeId,
             AdminRegistrationChargeRequestDTO request) {
@@ -139,7 +169,10 @@ public class AdminRegistrationChargeService {
         return toResponseDTO(updatedCharge);
     }
 
-    // DELETE: Registration charge
+    // =====================================
+    // DELETE: REGISTRATION CHARGE
+    // =====================================
+
     public void deleteRegistrationCharge(Long registrationChargeId) {
 
         RegistrationCharge charge = registrationChargeRepository
@@ -151,6 +184,10 @@ public class AdminRegistrationChargeService {
         registrationChargeRepository.delete(charge);
     }
 
+    // =====================================
+    // APPLY REQUEST AND VALIDATE SCOPE
+    // =====================================
+
     private void applyRequest(
             RegistrationCharge charge,
             AdminRegistrationChargeRequestDTO request) {
@@ -161,8 +198,7 @@ public class AdminRegistrationChargeService {
                     "Request body is required");
         }
 
-        String scope = normalize(request.getChargeScope())
-                .toUpperCase(Locale.ROOT);
+        ChargeScope scope = request.getChargeScope();
 
         String stateCode = normalizeStateCode(request.getStateCode());
         String chargeName = normalize(request.getChargeName());
@@ -170,15 +206,30 @@ public class AdminRegistrationChargeService {
         Long cityId = request.getCityId();
 
         validateCommonFields(chargeName, chargeValue);
-        validateStateExists(stateCode);
 
-        if (!scope.equals("STATE") && !scope.equals("CITY")) {
+        if (scope == null) {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST,
-                    "Charge scope must be STATE or CITY");
+                    "Charge scope is required");
         }
 
-        if ("STATE".equals(scope)) {
+        // NATIONAL SCOPE
+        if (scope == ChargeScope.NATIONAL) {
+
+            if (!stateCode.isEmpty() || cityId != null) {
+                throw new ResponseStatusException(
+                        HttpStatus.BAD_REQUEST,
+                        "State code and city ID must be null for a NATIONAL charge");
+            }
+
+            stateCode = null;
+            cityId = null;
+        }
+
+        // STATE SCOPE
+        else if (scope == ChargeScope.STATE) {
+
+            validateStateExists(stateCode);
 
             if (cityId != null) {
                 throw new ResponseStatusException(
@@ -186,7 +237,14 @@ public class AdminRegistrationChargeService {
                         "City ID must be null for a STATE-level charge");
             }
 
-        } else {
+            cityId = null;
+        }
+
+
+// CITY SCOPE
+        else if (scope == ChargeScope.CITY) {
+
+            validateStateExists(stateCode);
 
             if (cityId == null) {
                 throw new ResponseStatusException(
@@ -194,10 +252,12 @@ public class AdminRegistrationChargeService {
                         "City ID is required for a CITY-level charge");
             }
 
-            City city = cityRepository.findById(cityId)
+            final Long selectedCityId = cityId;
+
+            City city = cityRepository.findById(selectedCityId)
                     .orElseThrow(() -> new ResponseStatusException(
                             HttpStatus.BAD_REQUEST,
-                            "City not found: " + cityId));
+                            "City not found: " + selectedCityId));
 
             if (!stateCode.equalsIgnoreCase(city.getStateCode())) {
                 throw new ResponseStatusException(
@@ -207,12 +267,17 @@ public class AdminRegistrationChargeService {
             }
         }
 
+
         charge.setChargeScope(scope);
         charge.setStateCode(stateCode);
         charge.setCityId(cityId);
         charge.setChargeName(chargeName);
         charge.setChargeValue(chargeValue);
     }
+
+    // =====================================
+    // COMMON FIELD VALIDATION
+    // =====================================
 
     private void validateCommonFields(
             String chargeName,
@@ -222,6 +287,12 @@ public class AdminRegistrationChargeService {
             throw new ResponseStatusException(
                     HttpStatus.BAD_REQUEST,
                     "Charge name is required");
+        }
+
+        if (chargeName.length() > 100) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Charge name cannot exceed 100 characters");
         }
 
         if (chargeValue == null) {
@@ -241,7 +312,17 @@ public class AdminRegistrationChargeService {
                     HttpStatus.BAD_REQUEST,
                     "Charge value supports up to 4 decimal places");
         }
+
+        if (chargeValue.precision() - chargeValue.scale() > 11) {
+            throw new ResponseStatusException(
+                    HttpStatus.BAD_REQUEST,
+                    "Charge value cannot exceed 11 integer digits");
+        }
     }
+
+    // =====================================
+    // STATE VALIDATION
+    // =====================================
 
     private void validateStateExists(String stateCode) {
 
@@ -258,6 +339,10 @@ public class AdminRegistrationChargeService {
         }
     }
 
+    // =====================================
+    // NORMALIZATION
+    // =====================================
+
     private String normalize(String value) {
         return value == null ? "" : value.trim();
     }
@@ -265,6 +350,10 @@ public class AdminRegistrationChargeService {
     private String normalizeStateCode(String value) {
         return normalize(value).toUpperCase(Locale.ROOT);
     }
+
+    // =====================================
+    // ENTITY TO RESPONSE DTO
+    // =====================================
 
     private AdminRegistrationChargeResponseDTO toResponseDTO(
             RegistrationCharge charge) {

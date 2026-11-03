@@ -11,4 +11,8 @@ public interface TaxRuleConditionRepository
     List<TaxRuleCondition> findByTaxRuleId(Long taxRuleId);
 
     void deleteByTaxRuleId(Long taxRuleId);
+    boolean existsByConditionFieldIdAndOperator(
+            Long conditionFieldId,
+            String operator
+    );
 }

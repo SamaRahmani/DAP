@@ -1,8 +1,11 @@
+
 package com.dap.calculation.admin.registration.controller;
 
 import com.dap.calculation.admin.registration.dto.AdminRegistrationChargeRequestDTO;
 import com.dap.calculation.admin.registration.dto.AdminRegistrationChargeResponseDTO;
 import com.dap.calculation.admin.registration.service.AdminRegistrationChargeService;
+
+import jakarta.validation.Valid;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -21,10 +24,19 @@ public class AdminRegistrationChargeController {
         this.adminRegistrationChargeService = adminRegistrationChargeService;
     }
 
+    // =====================================
+    // GET: ALL REGISTRATION CHARGES
+    // =====================================
+
     @GetMapping
     public List<AdminRegistrationChargeResponseDTO> getAllRegistrationCharges() {
+
         return adminRegistrationChargeService.getAllRegistrationCharges();
     }
+
+    // =====================================
+    // GET: REGISTRATION CHARGE BY ID
+    // =====================================
 
     @GetMapping("/{registrationChargeId}")
     public AdminRegistrationChargeResponseDTO getRegistrationChargeById(
@@ -34,6 +46,11 @@ public class AdminRegistrationChargeController {
                 .getRegistrationChargeById(registrationChargeId);
     }
 
+    // =====================================
+    // GET: ALL CHARGES FOR A STATE
+    // Includes NATIONAL and STATE/CITY charges
+    // =====================================
+
     @GetMapping("/state/{stateCode}")
     public List<AdminRegistrationChargeResponseDTO> getRegistrationChargesByState(
             @PathVariable String stateCode) {
@@ -41,6 +58,10 @@ public class AdminRegistrationChargeController {
         return adminRegistrationChargeService
                 .getRegistrationChargesByState(stateCode);
     }
+
+    // =====================================
+    // GET: STATE-LEVEL CHARGES
+    // =====================================
 
     @GetMapping("/state/{stateCode}/state-level")
     public List<AdminRegistrationChargeResponseDTO> getStateLevelCharges(
@@ -50,6 +71,10 @@ public class AdminRegistrationChargeController {
                 .getStateLevelCharges(stateCode);
     }
 
+    // =====================================
+    // GET: CITY-LEVEL CHARGES
+    // =====================================
+
     @GetMapping("/city/{cityId}")
     public List<AdminRegistrationChargeResponseDTO> getCityLevelCharges(
             @PathVariable Long cityId) {
@@ -58,23 +83,35 @@ public class AdminRegistrationChargeController {
                 .getCityLevelCharges(cityId);
     }
 
+    // =====================================
+    // POST: CREATE REGISTRATION CHARGE
+    // =====================================
+
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public AdminRegistrationChargeResponseDTO createRegistrationCharge(
-            @RequestBody AdminRegistrationChargeRequestDTO request) {
+            @Valid @RequestBody AdminRegistrationChargeRequestDTO request) {
 
         return adminRegistrationChargeService
                 .createRegistrationCharge(request);
     }
 
+    // =====================================
+    // PUT: UPDATE REGISTRATION CHARGE
+    // =====================================
+
     @PutMapping("/{registrationChargeId}")
     public AdminRegistrationChargeResponseDTO updateRegistrationCharge(
             @PathVariable Long registrationChargeId,
-            @RequestBody AdminRegistrationChargeRequestDTO request) {
+            @Valid @RequestBody AdminRegistrationChargeRequestDTO request) {
 
         return adminRegistrationChargeService
                 .updateRegistrationCharge(registrationChargeId, request);
     }
+
+    // =====================================
+    // DELETE: REGISTRATION CHARGE
+    // =====================================
 
     @DeleteMapping("/{registrationChargeId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
