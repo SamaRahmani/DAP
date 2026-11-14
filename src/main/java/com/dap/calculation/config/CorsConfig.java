@@ -1,7 +1,9 @@
+
 package com.dap.calculation.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
 import org.springframework.web.servlet.config.annotation.CorsRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
@@ -10,15 +12,20 @@ public class CorsConfig {
 
     @Bean
     public WebMvcConfigurer corsConfigurer() {
+
         return new WebMvcConfigurer() {
 
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/api/v1/admin/**")
-                        .allowedOrigins("http://localhost:4200",
-                                "https://samarahmani.github.io",
 
-                                "http://localhost:51112")
+                registry.addMapping("/api/**")
+
+                        .allowedOrigins(
+                                "http://localhost:4200",
+                                "https://samarahmani.github.io",
+                                "http://localhost:51112"
+                        )
+
                         .allowedMethods(
                                 "GET",
                                 "POST",
@@ -27,6 +34,7 @@ public class CorsConfig {
                                 "DELETE",
                                 "OPTIONS"
                         )
+
                         .allowedHeaders("*");
             }
         };
