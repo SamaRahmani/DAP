@@ -7,6 +7,9 @@ import com.dap.calculation.auth.service.RefreshTokenService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import org.springframework.http.HttpMethod;
+import jakarta.servlet.DispatcherType;
+
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
 
@@ -60,7 +63,6 @@ public class SecurityConfig {
                 .csrf(csrf -> csrf.disable())
 
                 .formLogin(form -> form.disable())
-
                 .httpBasic(basic -> basic.disable())
 
                 .sessionManagement(session ->
@@ -71,16 +73,36 @@ public class SecurityConfig {
 
                 .authorizeHttpRequests(auth -> auth
 
+                        // Allow internal error dispatch
+                        .dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
+
+                        // Public authentication endpoints
                         .requestMatchers(
                                 "/api/auth/**",
                                 "/api/calculate"
                         ).permitAll()
 
+                        // Public DAP calculation API
+                        .requestMatchers(
+                                HttpMethod.POST,
+                                "/api/v1/dap/calculate"
+                        ).permitAll()
+
+                        // Public read-only master data APIs
+                        .requestMatchers(
+                                HttpMethod.GET,
+                                "/api/v1/locations/**",
+                                "/api/v1/insurance/**",
+                                "/api/v1/vehicles/**"
+                        ).permitAll()
+
+                        // Admin-only endpoints
                         .requestMatchers(
                                 "/api/v1/admin/**",
                                 "/api/admin/**"
                         ).hasRole("ADMIN")
 
+                        // Everything else requires authentication
                         .anyRequest().authenticated()
                 )
 

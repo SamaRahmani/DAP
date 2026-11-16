@@ -22,6 +22,7 @@ public class CorsConfig {
 
                         .allowedOrigins(
                                 "http://localhost:4200",
+                                "http://localhost:4300",
                                 "https://samarahmani.github.io",
                                 "http://localhost:51112"
                         )

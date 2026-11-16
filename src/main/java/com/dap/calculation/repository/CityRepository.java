@@ -4,10 +4,17 @@ import com.dap.calculation.entity.City;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface CityRepository extends JpaRepository<City, Long> {
 
     List<City> findByStateCode(String stateCode);
 
     boolean existsByCityIdAndStateCode(Long cityId, String stateCode);
+
+
+    Optional<City> findByCityNameIgnoreCaseAndStateCode(
+            String cityName,
+            String stateCode
+    );
 }

@@ -1,35 +1,31 @@
+
 package com.dap.calculation.dto;
 
 import java.math.BigDecimal;
 
 public class DapCalculationResponse {
 
-    private String vehicleId;
     private String modelName;
     private String variantName;
 
+    private String stateName;
+    private String cityName;
     private String rtoCode;
-    private String stateCode;
 
     private String insuranceProvider;
+    private BigDecimal insurancePercentage;
 
     private BigDecimal exShowroomPrice;
-    private BigDecimal roadTax;
-    private BigDecimal tcs;
-    private BigDecimal cess;
-    private BigDecimal registrationCharges;
     private BigDecimal insurancePremium;
+
+    private BigDecimal nationalCharges;
+    private BigDecimal stateCharges;
+    private BigDecimal cityCharges;
+
+    private BigDecimal registrationCharges;
     private BigDecimal totalDriveAwayPrice;
 
     public DapCalculationResponse() {
-    }
-
-    public String getVehicleId() {
-        return vehicleId;
-    }
-
-    public void setVehicleId(String vehicleId) {
-        this.vehicleId = vehicleId;
     }
 
     public String getModelName() {
@@ -48,20 +44,28 @@ public class DapCalculationResponse {
         this.variantName = variantName;
     }
 
+    public String getStateName() {
+        return stateName;
+    }
+
+    public void setStateName(String stateName) {
+        this.stateName = stateName;
+    }
+
+    public String getCityName() {
+        return cityName;
+    }
+
+    public void setCityName(String cityName) {
+        this.cityName = cityName;
+    }
+
     public String getRtoCode() {
         return rtoCode;
     }
 
     public void setRtoCode(String rtoCode) {
         this.rtoCode = rtoCode;
-    }
-
-    public String getStateCode() {
-        return stateCode;
-    }
-
-    public void setStateCode(String stateCode) {
-        this.stateCode = stateCode;
     }
 
     public String getInsuranceProvider() {
@@ -72,6 +76,14 @@ public class DapCalculationResponse {
         this.insuranceProvider = insuranceProvider;
     }
 
+    public BigDecimal getInsurancePercentage() {
+        return insurancePercentage;
+    }
+
+    public void setInsurancePercentage(BigDecimal insurancePercentage) {
+        this.insurancePercentage = insurancePercentage;
+    }
+
     public BigDecimal getExShowroomPrice() {
         return exShowroomPrice;
     }
@@ -80,28 +92,36 @@ public class DapCalculationResponse {
         this.exShowroomPrice = exShowroomPrice;
     }
 
-    public BigDecimal getRoadTax() {
-        return roadTax;
+    public BigDecimal getInsurancePremium() {
+        return insurancePremium;
     }
 
-    public void setRoadTax(BigDecimal roadTax) {
-        this.roadTax = roadTax;
+    public void setInsurancePremium(BigDecimal insurancePremium) {
+        this.insurancePremium = insurancePremium;
     }
 
-    public BigDecimal getTcs() {
-        return tcs;
+    public BigDecimal getNationalCharges() {
+        return nationalCharges;
     }
 
-    public void setTcs(BigDecimal tcs) {
-        this.tcs = tcs;
+    public void setNationalCharges(BigDecimal nationalCharges) {
+        this.nationalCharges = nationalCharges;
     }
 
-    public BigDecimal getCess() {
-        return cess;
+    public BigDecimal getStateCharges() {
+        return stateCharges;
     }
 
-    public void setCess(BigDecimal cess) {
-        this.cess = cess;
+    public void setStateCharges(BigDecimal stateCharges) {
+        this.stateCharges = stateCharges;
+    }
+
+    public BigDecimal getCityCharges() {
+        return cityCharges;
+    }
+
+    public void setCityCharges(BigDecimal cityCharges) {
+        this.cityCharges = cityCharges;
     }
 
     public BigDecimal getRegistrationCharges() {
@@ -110,14 +130,6 @@ public class DapCalculationResponse {
 
     public void setRegistrationCharges(BigDecimal registrationCharges) {
         this.registrationCharges = registrationCharges;
-    }
-
-    public BigDecimal getInsurancePremium() {
-        return insurancePremium;
-    }
-
-    public void setInsurancePremium(BigDecimal insurancePremium) {
-        this.insurancePremium = insurancePremium;
     }
 
     public BigDecimal getTotalDriveAwayPrice() {
